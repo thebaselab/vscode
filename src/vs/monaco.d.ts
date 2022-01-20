@@ -939,6 +939,12 @@ declare namespace monaco {
 declare namespace monaco.editor {
 
 	/**
+	 * Compute dirty diff between two models
+	 * From: https://github.com/microsoft/vscode/blob/c15cb13a383dc9ff2dc0828152e374a6b9ecc2b3/src/vs/editor/common/services/editorSimpleWorker.ts
+	 */
+	export function computeDirtyDiff(originalUrl: string, modifiedUrl: string, ignoreTrimWhitespace: boolean): Promise<IChange[] | null>;
+
+	/**
 	 * Create a new editor under `domElement`.
 	 * `domElement` should be empty (not contain other dom nodes).
 	 * The editor will read the size of `domElement`.

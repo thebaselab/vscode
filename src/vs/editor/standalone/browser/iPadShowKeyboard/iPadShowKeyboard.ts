@@ -23,10 +23,10 @@ export class IPadShowKeyboard extends Disposable implements IEditorContribution 
 		super();
 		this.editor = editor;
 		this.widget = null;
-		if (isIOS) {
-			this._register(editor.onDidChangeConfiguration(() => this.update()));
-			this.update();
-		}
+		// if (isIOS) {
+		// 	this._register(editor.onDidChangeConfiguration(() => this.update()));
+		// 	this.update();
+		// }
 	}
 
 	private update(): void {

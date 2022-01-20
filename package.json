@@ -48,6 +48,7 @@
     "web": "echo 'yarn web' is replaced by './scripts/code-server' or './scripts/code-web'",
     "compile-cli": "gulp compile-cli",
     "compile-web": "node --max-old-space-size=4095 ./node_modules/gulp/bin/gulp.js compile-web",
+    "compile-monaco": "node --max_old_space_size=4095 ./node_modules/gulp/bin/gulp.js editor-distro",
     "watch-web": "node --max-old-space-size=4095 ./node_modules/gulp/bin/gulp.js watch-web",
     "watch-cli": "node --max-old-space-size=4095 ./node_modules/gulp/bin/gulp.js watch-cli",
     "eslint": "node build/eslint",

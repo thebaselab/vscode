@@ -40,6 +40,31 @@ import { IKeybindingService } from 'vs/platform/keybinding/common/keybinding';
 import { IMarker, IMarkerData, IMarkerService } from 'vs/platform/markers/common/markers';
 import { IOpenerService } from 'vs/platform/opener/common/opener';
 import { MultiDiffEditorWidget } from 'vs/editor/browser/widget/multiDiffEditor/multiDiffEditorWidget';
+import { IChange } from 'vs/editor/common/editorCommon';
+import { DiffComputer } from 'vs/editor/common/diff/diffComputer';
+
+/**
+ * Compute dirty diff between two models
+ * From: https://github.com/microsoft/vscode/blob/c15cb13a383dc9ff2dc0828152e374a6b9ecc2b3/src/vs/editor/common/services/editorSimpleWorker.ts
+ */
+export async function computeDirtyDiff(originalUrl: string, modifiedUrl: string, ignoreTrimWhitespace: boolean): Promise<IChange[] | null> {
+	const original = getModel(URI.parse(originalUrl));
+	const modified = getModel(URI.parse(modifiedUrl));
+	if (!original || !modified) {
+		return null;
+	}
+
+	const originalLines = original.getLinesContent();
+	const modifiedLines = modified.getLinesContent();
+	const diffComputer = new DiffComputer(originalLines, modifiedLines, {
+		shouldComputeCharChanges: false,
+		shouldPostProcessCharChanges: false,
+		shouldIgnoreTrimWhitespace: ignoreTrimWhitespace,
+		shouldMakePrettyDiff: true,
+		maxComputationTime: 1000
+	});
+	return diffComputer.computeDiff().changes;
+}
 
 /**
  * Create a new editor under `domElement`.
@@ -502,6 +527,7 @@ export function registerEditorOpener(opener: ICodeEditorOpener): IDisposable {
 export function createMonacoEditorAPI(): typeof monaco.editor {
 	return {
 		// methods
+		computeDirtyDiff: <any>computeDirtyDiff,
 		create: <any>create,
 		getEditors: <any>getEditors,
 		getDiffEditors: <any>getDiffEditors,
