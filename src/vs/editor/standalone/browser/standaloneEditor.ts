@@ -40,8 +40,7 @@ import { IKeybindingService } from 'vs/platform/keybinding/common/keybinding';
 import { IMarker, IMarkerData, IMarkerService } from 'vs/platform/markers/common/markers';
 import { IOpenerService } from 'vs/platform/opener/common/opener';
 import { MultiDiffEditorWidget } from 'vs/editor/browser/widget/multiDiffEditor/multiDiffEditorWidget';
-import { IChange } from 'vs/editor/common/editorCommon';
-import { DiffComputer } from 'vs/editor/common/diff/diffComputer';
+import { DiffComputer, IChange } from 'vs/editor/common/diff/smartLinesDiffComputer';
 
 /**
  * Compute dirty diff between two models
